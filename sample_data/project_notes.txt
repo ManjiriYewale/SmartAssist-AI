@@ -1,0 +1,5 @@
+Project Phoenix - meeting notes
+
+The Phoenix migration project moves the billing system from the legacy data centre to the cloud.
+Go-live date is 15 September 2025. The project budget is INR 4.5 crore and the project lead is Meera Nair.
+Main risks: data migration errors, vendor delays and staff training. Mitigation: two dry runs and a rollback plan.

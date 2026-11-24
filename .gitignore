@@ -1,0 +1,19 @@
+# secrets / local config
+.env
+# python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+# runtime data (user documents + vectors + logs)
+data/uploads/*
+data/chroma_db/*
+!data/uploads/.gitkeep
+!data/chroma_db/.gitkeep
+logs/*
+!logs/.gitkeep
+evaluation/last_report.json
+*.db
+.DS_Store
+.vscode/

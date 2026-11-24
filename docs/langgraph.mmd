@@ -1,0 +1,35 @@
+---
+config:
+  flowchart:
+    curve: linear
+---
+graph TD;
+	__start__([<p>__start__</p>]):::first
+	query_understanding(query_understanding)
+	intent_classification(intent_classification)
+	agent_decision(agent_decision)
+	rag_retrieval(rag_retrieval)
+	tool_execution(tool_execution)
+	response_generation(response_generation)
+	final_response(final_response)
+	__end__([<p>__end__</p>]):::last
+	__start__ --> query_understanding;
+	agent_decision -. &nbsp;error&nbsp; .-> final_response;
+	agent_decision -. &nbsp;rag&nbsp; .-> rag_retrieval;
+	agent_decision -. &nbsp;respond&nbsp; .-> response_generation;
+	agent_decision -. &nbsp;tools&nbsp; .-> tool_execution;
+	intent_classification -. &nbsp;agent&nbsp; .-> agent_decision;
+	intent_classification -. &nbsp;error&nbsp; .-> final_response;
+	intent_classification -. &nbsp;general&nbsp; .-> response_generation;
+	query_understanding -. &nbsp;error&nbsp; .-> final_response;
+	query_understanding -. &nbsp;ok&nbsp; .-> intent_classification;
+	rag_retrieval -. &nbsp;agent&nbsp; .-> agent_decision;
+	rag_retrieval -. &nbsp;respond&nbsp; .-> response_generation;
+	response_generation --> final_response;
+	tool_execution -. &nbsp;agent&nbsp; .-> agent_decision;
+	tool_execution -. &nbsp;respond&nbsp; .-> response_generation;
+	final_response --> __end__;
+	classDef default fill:#f2f0ff,line-height:1.2
+	classDef first fill-opacity:0
+	classDef last fill:#bfb6fc
+

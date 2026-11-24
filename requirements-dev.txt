@@ -1,0 +1,5 @@
+-r requirements.txt
+pytest==9.2.0
+httpx==0.28.1          # FastAPI TestClient
+reportlab==5.1.0       # only to regenerate sample PDF  (scripts/make_sample_documents.py)
+python-docx==1.2.0     # only to regenerate sample DOCX

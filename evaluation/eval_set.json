@@ -1,0 +1,39 @@
+{
+  "documents": ["employee_handbook.pdf", "annual_report_2023.docx", "annual_report_2024.docx", "sales_data.csv", "expenses_q1.xlsx", "project_notes.txt"],
+  "retrieval": [
+    {"q": "How many days of annual leave does an employee get?", "doc": "employee_handbook.pdf", "text": "24 days"},
+    {"q": "What is the sick leave entitlement?", "doc": "employee_handbook.pdf", "text": "12 days of paid sick leave"},
+    {"q": "How long is maternity leave?", "doc": "employee_handbook.pdf", "text": "26 weeks"},
+    {"q": "What is the home office allowance?", "doc": "employee_handbook.pdf", "text": "15,000"},
+    {"q": "hotel reimbursement limit in metro cities", "doc": "employee_handbook.pdf", "text": "6,000 per night"},
+    {"q": "What was the total revenue in 2024?", "doc": "annual_report_2024.docx", "text": "520 crore"},
+    {"q": "How many employees did the company have at the end of 2023?", "doc": "annual_report_2023.docx", "text": "1850"},
+    {"q": "Which new payment product was launched in 2024?", "doc": "annual_report_2024.docx", "text": "SmartPay"},
+    {"q": "Who is the Phoenix project lead?", "doc": "project_notes.txt", "text": "Meera Nair"},
+    {"q": "What is the go-live date of the migration?", "doc": "project_notes.txt", "text": "15 September 2025"},
+    {"q": "Which department spent on cloud?", "doc": "expenses_q1.xlsx", "text": "Cloud"}
+  ],
+  "unanswerable": [
+    "What is the capital of Mongolia according to my documents?",
+    "Explain quantum chromodynamics lattice gauge theory from my files"
+  ],
+  "tools": [
+    {"tool": "calculator", "args": {"operation": "add_gst", "amount": 2500, "percent": 18}, "expect": {"total_amount": 2950.0}},
+    {"tool": "calculator", "args": {"operation": "remove_gst", "amount": 1180, "percent": 18}, "expect": {"net_amount": 1000.0}},
+    {"tool": "calculator", "args": {"operation": "percentage_of", "amount": 2000, "percent": 15}, "expect": {"result": 300}},
+    {"tool": "calculator", "args": {"operation": "average", "numbers": [10, 20, 60]}, "expect": {"result": 30}},
+    {"tool": "csv_excel_analyzer", "args": {"document": "sales_data.csv", "operation": "sum", "column": "revenue"}, "expect_pandas": "sum:revenue"},
+    {"tool": "csv_excel_analyzer", "args": {"document": "sales_data.csv", "operation": "max", "column": "revenue"}, "expect_pandas": "max:revenue"},
+    {"tool": "csv_excel_analyzer", "args": {"document": "sales_data.csv", "operation": "mean", "column": "units"}, "expect_pandas": "mean:units"},
+    {"tool": "csv_excel_analyzer", "args": {"document": "expenses_q1.xlsx", "operation": "sum", "column": "amount"}, "expect": {"result": 824000}}
+  ],
+  "agent": [
+    {"q": "How many days of annual leave do employees get?", "intent": "document_qa", "tools": ["document_search"], "answer_contains": ["24"]},
+    {"q": "What is the highest revenue in sales_data.csv?", "intent": "data_analysis", "tools": ["csv_excel_analyzer"], "answer_contains": []},
+    {"q": "Calculate 18% GST on 2500", "intent": "calculation", "tools": ["calculator"], "answer_contains": ["450", "2,950|2950"]},
+    {"q": "Compare annual_report_2023.docx and annual_report_2024.docx", "intent": "comparison", "tools": ["document_comparator"], "answer_contains": ["520"]},
+    {"q": "Summarize project_notes.txt", "intent": "summarization", "tools": ["document_summarizer"], "answer_contains": ["Phoenix"]},
+    {"q": "Which documents have I uploaded?", "intent": "document_management", "tools": ["document_manager"], "answer_contains": ["handbook"]},
+    {"q": "Hi, what can you do?", "intent": "general_chat", "tools": [], "answer_contains": []}
+  ]
+}
